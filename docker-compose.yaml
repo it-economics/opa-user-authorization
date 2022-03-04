@@ -1,0 +1,19 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  service:
+    build: .
+    ports:
+      - "8081:8081"
+    links:
+      - opa
+  opa:
+    image: openpolicyagent/opa
+    ports:
+      - "8181:8181"
+    command:
+      - "run"
+      - "--server"
+      - "--log-level=debug"
+      - "authz.rego"
+    volumes:
+      - ./policy/authz.rego:/authz.rego
