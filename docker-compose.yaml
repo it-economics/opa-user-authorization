@@ -2,8 +2,10 @@ version: "3.9"  # optional since v1.27.0
 services:
   service:
     build: .
+    environment:
+      OPA_URL: http://opa:8181
     ports:
-      - "8081:8081"
+      - "8082:8081"
     links:
       - opa
   opa:

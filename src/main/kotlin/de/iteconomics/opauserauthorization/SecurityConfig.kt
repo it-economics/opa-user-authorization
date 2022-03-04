@@ -26,8 +26,8 @@ class SecurityConfig {
                     .authorizeRequests()
                     .anyRequest().authenticated()
                     .accessDecisionManager(accessDecisionManager())
-                    .and().formLogin().disable()
-                    .httpBasic()
+                    .and()
+                    .csrf().disable()
         }
 
         @Bean

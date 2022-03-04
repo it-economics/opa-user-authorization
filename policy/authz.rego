@@ -1,4 +1,4 @@
-package httpapi.authz
+package authz
 
 subordinates = {"alice": [], "charlie": [], "bob": ["alice"], "betty": ["charlie"]}
 
@@ -14,14 +14,18 @@ default allow = false
 
 # Allow users to get their own salaries.
 allow {
-  input.method = "GET"
-  input.path = ["finance", "salary", username]
-  input.user == username
+  input.method == "GET"
+  not has_admin_path
+#  input.path = ["finance", "salary", username]
+#  input.user == username
+}
+
+has_admin_path {
+    input.path[_] == "admin"
 }
 
 # Allow managers to get their subordinates' salaries.
 allow {
-  input.method = "GET"
-  input.path = ["finance", "salary", username]
-  subordinates[input.user][_] == username
+  input.path[_] == "info"
+  input.method == "POST"
 }

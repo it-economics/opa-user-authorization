@@ -1,5 +1,6 @@
 package de.iteconomics.opauserauthorization
 
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -16,7 +17,7 @@ class InfoController {
 
     private fun info() = Info()
 
-    @PostMapping
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun updateInfo(@RequestBody updatedInfo: Info) =
             ResponseEntity.accepted().body(updatedInfo)
 }

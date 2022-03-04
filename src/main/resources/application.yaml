@@ -1,1 +1,5 @@
-
+server:
+  port: 8081
+opa-user-authorization:
+  opa:
+    url: ${OPA_URL:http://localhost:8181}

@@ -24,6 +24,6 @@ class OPAVoter(
             opaService.checkAccess(
                     authentication,
                     filterInvocation.request.method,
-                    filterInvocation.requestUrl.replace("^/|/$", "").split("/")
+                    filterInvocation.requestUrl.replace("^/|/$", "").split("/").filter { it != "" }
             )
 }
