@@ -20,10 +20,12 @@ class OPAVoter(
             if (hasAccess(authentication, filterInvocation, attributes)) AccessDecisionVoter.ACCESS_GRANTED
             else AccessDecisionVoter.ACCESS_DENIED
 
-    private fun hasAccess(authentication: Authentication, filterInvocation: FilterInvocation, attributes: MutableCollection<ConfigAttribute>) =
-            opaService.checkAccess(
-                    authentication,
-                    filterInvocation.request.method,
-                    filterInvocation.requestUrl.replace("^/|/$", "").split("/").filter { it != "" }
-            )
+    private fun hasAccess(authentication: Authentication, filterInvocation: FilterInvocation, attributes: MutableCollection<ConfigAttribute>): Boolean {
+        val token = filterInvocation.request.getHeader("Authorization").removePrefix("Bearer ")
+        return opaService.checkAccess(
+                token,
+                filterInvocation.request.method,
+                filterInvocation.requestUrl.replace("^/|/$", "").split("/").filter { it != "" }
+        )
+    }
 }

@@ -9,12 +9,13 @@ import org.springframework.web.reactive.function.client.bodyToMono
 class OPAService(
         private val opaConfig: OPAConfig
 ) {
-    fun checkAccess(authentication: Authentication, method: String, pathElements: List<String>): Boolean {
+    fun checkAccess(token: String, method: String, pathElements: List<String>): Boolean {
         val result = webClient()
                 .post()
                 .uri("/v1/data/authz/allow")
                 .bodyValue(mapOf(
                         "input" to mapOf(
+                                "token" to token,
                                 "method" to method,
                                 "path" to pathElements
                         )
